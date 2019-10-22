@@ -152,6 +152,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-面向对象" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/22/面向对象/">面向对象</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/22/面向对象/" class="archive-article-date">
+  	<time datetime="2019-10-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-面向对象概念："><a href="#1-面向对象概念：" class="headerlink" title="1.面向对象概念："></a>1.面向对象概念：</h3><p>  2.类的创建<br>      语法：public class 类名{}<br>      File—&gt;new—&gt;class—&gt;类名<br>  3.创建对象<br>     类名 对象名=new 类名();<br>      对象名.方法名(); 对象名.属性<br>  4.构造方法：方法名和类名相同,没有返回值<br>      public class 类名{<br>          public 类名(){}//主要的做用是初始化操作<br>      }<br>  5.构造方法重载<br>      在同一个类中，方法名相同，参数个数，顺序，类型不相同的构造方法<br>      public class 类名{<br>          public 类名(){}<br>         public 类名(String name,int age){}<br>     }<br>  6.构造方法的执行<br>      new 类名();—&gt;执行构造方法<br>      super();—&gt;执行了父类的构造方法<br>  7.static静态修饰符<br>      静态修饰符可以修饰属性，方法，代码块<br>      类名.属性      类名.方法名<br>  8.java内存（栈和堆，static，方法区，gc（垃圾回收机制））</p>
+<p>  第三章 面向对象三大特征—封装<br>  1.封装的概念<br>  2.封装的步骤<br>      1.把属性私有化（private）<br>      2.对这些属性设置get和set方法<br>      3.调用处理这些方法<br>  3.封装的作用：避免一些用一些不合乎常理的操作<br>  4.修饰符<br>      public—&gt;公共的：在一个项目中都可以访问，权限最高<br>     private—&gt;私有的：只能在本类中进行访问，权限最低<br>     protected—&gt;安全的，受保护的：同一个包能进行访问，继承中之类可以访问父类<br>     default—&gt;默认的：同一个包能访问<br>  第四章 面向对象三大特征—继承<br>  1.继承的概念：父亲儿子，电影《西虹市首富》<br>  2.继承的关键字：extends<br>  3.继承的语法：<br>      public class 类名  extends 父类{}<br>  4.使用，在之类中：<br>      可以直接调用父类的非私有属性和方法<br>      可以用super.方法     super.属性<br>  5.父类构造方法调用：super();<br>      调用父类的构造方法必须在之类中调用<br>      必须实在之类构造方法的第一行代码<br>  6.重写@Override<br>      必须继承<br>      方法名一致，参数个数，顺序，类型全部一致<br>  第五章 面向对象（多态）<br>  1.多态的概念<br>  2.多态的必要条件<br>      继承<br>      重写<br>      父类引用指向子类对象（向上转型）<br>  3.多态的使用<br>      public class Father{<br>          public void cooking(){<br>              System.out.println(“米饭”);<br>          }<br>      }<br>       public class Son extends Father{<br>              @Override<br>              public void cooking(){<br>                  System.out.println(“熬粥”);<br>              }<br>          }<br>          public class Test {<br>             public static void main(String[] args) {<br>                 Father son=new Son();<br>                 son.cooking();<br>             }<br>         }<br>  4.向下转型<br>      Son son=(Son)father;</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/22/面向对象/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-java面向对象知识点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
