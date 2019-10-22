@@ -152,6 +152,78 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-用栈写出10进制转换成8进制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/22/用栈写出10进制转换成8进制/">用栈写出10进制转换成8进制</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/22/用栈写出10进制转换成8进制/" class="archive-article-date">
+  	<time datetime="2019-10-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;math.h&gt;</p>
+<p>struct Stack<br>{<br>    char mData[100];<br>    int mLen;<br>};</p>
+<p>//初始化栈<br>void InitStack(struct Stack *S)<br>{<br>    S-&gt;mLen = -1;<br>}<br>//元素入栈<br>void Push(struct Stack *S,char item)<br>{<br>    S-&gt;mData[++S-&gt;mLen] = item;<br>}<br>//元素出栈<br>char Pop(struct Stack *S)<br>{<br>    return S-&gt;mData[S-&gt;mLen–];<br>}<br>//返回栈顶元素<br>char  Top(struct Stack *S)<br>{<br>    return S-&gt;mData[S-&gt;mLen];<br>}<br>//清空栈<br>void Clear(struct Stack *S)<br>{<br>    int i;<br>    for(i = 0;i&lt;=S-&gt;mLen;i++)<br>    {<br>        Pop(S);<br>    }<br>}<br>//是否为空 是空返回1 否则返回0<br>int StackEmpty(struct Stack *S)<br>{<br>    if(S-&gt;mLen == -1)<br>        return 1;<br>    else<br>        return 0;<br>}</p>
+<p>// 栈使用字符串模拟<br>void converse_Dec_to_Oct()   //十进制转八进制<br>{<br>    int N;<br>    char e;<br>    struct Stack S;<br>    InitStack(&amp;S);<br>    printf(“请输入转到想要转到8进制的数:\n”);<br>    scanf(“%d”,&amp;N);<br>    //转换<br>    while(N)<br>    {<br>        Push(&amp;S,(char)(N%8+48));<br>        N = N/8;<br>    }<br>    //输出<br>    printf(“8进制的数为:”);<br>    while(!StackEmpty(&amp;S))<br>    {<br>        e = Pop(&amp;S);<br>        printf(“%c”,e);<br>    }</p>
+<p>}</p>
+<p>int main()<br>{<br>    int choose=0;<br>    printf(“请输入1进入10进制转到8进制：”);<br>    scanf(“%d”,&amp;choose);<br>    fflush(stdin);<br>    switch(choose)<br>    {<br>        case 1:converse_Dec_to_Oct();</p>
+<pre><code>}
+
+printf(&quot;\nHello world!\n&quot;);
+return 0;</code></pre><p>}</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/22/用栈写出10进制转换成8进制/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-面向对象" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

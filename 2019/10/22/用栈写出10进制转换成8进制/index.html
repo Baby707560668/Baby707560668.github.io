@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/10 | Hexo</title>
+  <title>用栈写出10进制转换成8进制 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/10/index.html">
+  <meta name="description" content="#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;math.h&amp;gt; struct Stack{    char mData[100];    int mLen;}; //初始化栈void InitStack(struct Stack *S){    S-&amp;gt;mLen = -1;}//元素入栈void Push(str">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用栈写出10进制转换成8进制">
+<meta property="og:url" content="http://yoursite.com/2019/10/22/用栈写出10进制转换成8进制/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;math.h&amp;gt; struct Stack{    char mData[100];    int mLen;}; //初始化栈void InitStack(struct Stack *S){    S-&amp;gt;mLen = -1;}//元素入栈void Push(str">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-22T02:25:18.918Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="用栈写出10进制转换成8进制">
+<meta name="twitter:description" content="#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;math.h&amp;gt; struct Stack{    char mData[100];    int mLen;}; //初始化栈void InitStack(struct Stack *S){    S-&amp;gt;mLen = -1;}//元素入栈void Push(str">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,130 +154,165 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-用栈写出10进制转换成8进制" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      用栈写出10进制转换成8进制
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/22/用栈写出10进制转换成8进制/" class="archive-article-date">
+
+        
+        <a href="/2019/10/22/用栈写出10进制转换成8进制/" class="archive-article-date">
   	<time datetime="2019-10-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/22/用栈写出10进制转换成8进制/">用栈写出10进制转换成8进制</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;math.h&gt;</p>
+<p>struct Stack<br>{<br>    char mData[100];<br>    int mLen;<br>};</p>
+<p>//初始化栈<br>void InitStack(struct Stack *S)<br>{<br>    S-&gt;mLen = -1;<br>}<br>//元素入栈<br>void Push(struct Stack *S,char item)<br>{<br>    S-&gt;mData[++S-&gt;mLen] = item;<br>}<br>//元素出栈<br>char Pop(struct Stack *S)<br>{<br>    return S-&gt;mData[S-&gt;mLen–];<br>}<br>//返回栈顶元素<br>char  Top(struct Stack *S)<br>{<br>    return S-&gt;mData[S-&gt;mLen];<br>}<br>//清空栈<br>void Clear(struct Stack *S)<br>{<br>    int i;<br>    for(i = 0;i&lt;=S-&gt;mLen;i++)<br>    {<br>        Pop(S);<br>    }<br>}<br>//是否为空 是空返回1 否则返回0<br>int StackEmpty(struct Stack *S)<br>{<br>    if(S-&gt;mLen == -1)<br>        return 1;<br>    else<br>        return 0;<br>}</p>
+<p>// 栈使用字符串模拟<br>void converse_Dec_to_Oct()   //十进制转八进制<br>{<br>    int N;<br>    char e;<br>    struct Stack S;<br>    InitStack(&amp;S);<br>    printf(“请输入转到想要转到8进制的数:\n”);<br>    scanf(“%d”,&amp;N);<br>    //转换<br>    while(N)<br>    {<br>        Push(&amp;S,(char)(N%8+48));<br>        N = N/8;<br>    }<br>    //输出<br>    printf(“8进制的数为:”);<br>    while(!StackEmpty(&amp;S))<br>    {<br>        e = Pop(&amp;S);<br>        printf(“%c”,e);<br>    }</p>
+<p>}</p>
+<p>int main()<br>{<br>    int choose=0;<br>    printf(“请输入1进入10进制转到8进制：”);<br>    scanf(“%d”,&amp;choose);<br>    fflush(stdin);<br>    switch(choose)<br>    {<br>        case 1:converse_Dec_to_Oct();</p>
+<pre><code>}
 
-        <div class="article-info info-on-right">
-          
-          
+printf(&quot;\nHello world!\n&quot;);
+return 0;</code></pre><p>}</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/22/用栈写出10进制转换成8进制/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/22/面向对象/" class="archive-article-date">
-  	<time datetime="2019-10-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/22/面向对象/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">面向对象</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/22/面向对象/">面向对象</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/11/java面向对象知识点/" class="archive-article-date">
-  	<time datetime="2019-10-11T04:02:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/11/java面向对象知识点/">java面向对象知识点</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/10/MySQL第一章/" class="archive-article-date">
-  	<time datetime="2019-10-10T13:08:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/10/MySQL第一章/">MySQL第一章</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -296,8 +335,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
