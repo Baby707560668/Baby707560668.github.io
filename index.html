@@ -152,36 +152,94 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-用栈写出10进制转换成8进制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Request和Response的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/22/用栈写出10进制转换成8进制/">用栈写出10进制转换成8进制</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/22/用栈写出10进制转换成8进制/" class="archive-article-date">
-  	<time datetime="2019-10-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;math.h&gt;</p>
-<p>struct Stack<br>{<br>    char mData[100];<br>    int mLen;<br>};</p>
-<p>//初始化栈<br>void InitStack(struct Stack *S)<br>{<br>    S-&gt;mLen = -1;<br>}<br>//元素入栈<br>void Push(struct Stack *S,char item)<br>{<br>    S-&gt;mData[++S-&gt;mLen] = item;<br>}<br>//元素出栈<br>char Pop(struct Stack *S)<br>{<br>    return S-&gt;mData[S-&gt;mLen–];<br>}<br>//返回栈顶元素<br>char  Top(struct Stack *S)<br>{<br>    return S-&gt;mData[S-&gt;mLen];<br>}<br>//清空栈<br>void Clear(struct Stack *S)<br>{<br>    int i;<br>    for(i = 0;i&lt;=S-&gt;mLen;i++)<br>    {<br>        Pop(S);<br>    }<br>}<br>//是否为空 是空返回1 否则返回0<br>int StackEmpty(struct Stack *S)<br>{<br>    if(S-&gt;mLen == -1)<br>        return 1;<br>    else<br>        return 0;<br>}</p>
-<p>// 栈使用字符串模拟<br>void converse_Dec_to_Oct()   //十进制转八进制<br>{<br>    int N;<br>    char e;<br>    struct Stack S;<br>    InitStack(&amp;S);<br>    printf(“请输入转到想要转到8进制的数:\n”);<br>    scanf(“%d”,&amp;N);<br>    //转换<br>    while(N)<br>    {<br>        Push(&amp;S,(char)(N%8+48));<br>        N = N/8;<br>    }<br>    //输出<br>    printf(“8进制的数为:”);<br>    while(!StackEmpty(&amp;S))<br>    {<br>        e = Pop(&amp;S);<br>        printf(“%c”,e);<br>    }</p>
-<p>}</p>
-<p>int main()<br>{<br>    int choose=0;<br>    printf(“请输入1进入10进制转到8进制：”);<br>    scanf(“%d”,&amp;choose);<br>    fflush(stdin);<br>    switch(choose)<br>    {<br>        case 1:converse_Dec_to_Oct();</p>
-<pre><code>}
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> title: Request和Response的区别</span><br><span class="line">date: 2019-11-3</span><br></pre></td></tr></table></figure>
 
-printf(&quot;\nHello world!\n&quot;);
-return 0;</code></pre><p>}</p>
+<p>Request 和 Response 对象起到了服务器与客户机之间的信息传递作用。Request 对象用于接收客户端浏览器提交的数据，而 Response 对象的功能则是将服务器端的数据发送到客户端浏览器。</p>
+<p>一、Request对象的五个集合：</p>
+<p>QueryString：用以获取客户端附在url地址后的查询字符串中的信息。</p>
+<pre><code>例如：stra=Request.QueryString [&quot;strUserld&quot;]</code></pre><p>Form：用以获取客户端在FORM表单中所输入的信息。（表单的method属性值需要为POST）</p>
+<pre><code>例如：stra=Request.Form[&quot;strUserld&quot;]</code></pre><p>Cookies：用以获取客户端的Cookie信息。</p>
+<pre><code>例如：stra=Request.Cookies[&quot;strUserld&quot;]</code></pre><p>ServerVariables：用以获取客户端发出的HTTP请求信息中的头信息及服务器端环境变量信息。</p>
+<pre><code>例如：stra=Request.ServerVariables[&quot;REMOTE_ADDR&quot;],返回客户端IP地址</code></pre><p>ClientCertificate：用以获取客户端的身份验证信息</p>
+<pre><code>例如：stra=Request.ClientCertificate[&quot;VALIDFORM&quot;],对于要求安全验证的网站，返回有效起始日期。</code></pre><p>二、Response对象<br>    Response对象用于动态响应客户端请示，控制发送给用户的信息，并将动态生成响应。Response对象提供了一个数据集合cookie，它用于在客户端写入cookie值。若指定的cookie不存在，则创建它。若存在，则将自动进行更新。结果返回给客户端浏览器。<br>    语法格式：Response.Cookies(CookieName)[(key)|.attribute]=value。这里的CookiesName是指定的Cookie的名称，如果指定了Key，则该Cookie就是一个字典，Attribute属性包括Domain，Expires，HasKeys，Path，Secure。</p>
+<p>response的方法:</p>
+<pre><code>Write：向客户端发送浏览器能够处理的各种数据,包括:html代码,脚本程序等。
+
+Redirect：response.redirect(&quot;url&quot;)的作用是在服务器端重定向于另一个网页。
+
+End：用来终止脚本程序。
+
+Clear：要说到Clear方法，就必须提到response的Buffer属性，Buffer属性用来设置服务器端是否将页面先输出到缓冲区。语法为：Response.Buffer=True/False
+
+Flush：当Buffer的值为True时，Flush方法用于将缓冲区中的当前页面内容立刻输出到客户端。</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/06/Request和Response的区别/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-jsp中post和get的区别及使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="jsp中post和get的区别及使用"><a href="#jsp中post和get的区别及使用" class="headerlink" title="jsp中post和get的区别及使用"></a>jsp中post和get的区别及使用</h1><p><strong>1：请求数据的大小不同。</strong></p>
+<p>因为get请求的数据是要追加到URL中，而URL的数据量一般不能超过2K，所以用get请求的方法对数据的大小有限制。而post请求方法是把数据放在消息体中，所以理论上对数据量没有限制。（但是实际操作中也不能能太大）</p>
+<p><strong>2：安全性不一样</strong></p>
+<p>因为get请求的数据是追加在URL中，外部用户能很方便的看到，从这个角度上来讲不安全。而post方法因为是讲请求放在消息体中，不会直接在URL中显示所以从这个角度来说数据会比较安全。</p>
+<p><strong>3：书签建立</strong></p>
+<p>get请求可以建立书签；post请求则不能。例如：假设你有一个页面允许用户指定搜索规则。用户可能一个星期之后才回来，想要得到原来的数据，但此时服务器上已经有新的数据了。</p>
+<p><strong>4：方法的使用</strong></p>
+<p>get用于得到某些东西，只是简单的获取，不会对服务器做任何的改变。post则用户发送数据来进行处理，可以修改服务器上的数据。</p>
+<p><strong>5：请求是否幂等</strong></p>
+<p>get请求是幂等的，它只是要得到一些东西，不会修改服务器上的内容。它能执行多次，而且不会产生任何不好的副作用。而post不是幂等的，post体中的提交的数据可能用于不可逆转的事务。所以从这个角度上来看的话要慎重使用doPost()功能。</p>
+<p>若表单中未指出method=“POST”，就会默认为HTTPGET请求。即缺省状态是调用get请求。</p>
+<p> 在学习JavaWeb最初的开始阶段，大家都会遇到HttpServlet中的doGet和doPost方法。</p>
+<p>（1）doGet方法：主要是处理Http中的Get请求<br>（2）doPost方法：主要是处理Http中的Post请求</p>
+<p><strong>那么Get请求和Post请求到底有什么样的区别</strong></p>
+<p>（1）get只有一个流，参数附加在url后，大小个数有严格限制且只能是字符串<br>例如，<a href="http://localhost:8888/javaweb/getServlet?name=123" target="_blank" rel="noopener">http://localhost:8888/javaweb/getServlet?name=123</a><br>（2）post的参数是通过另外的流传递的，不通过url，所以可以很大，也可以传递二进制数据，如文件的上传。</p>
+<p><strong>什么时候使用doGet和doPost方法 ：</strong></p>
+<p>1.通过表单提交到的servlet,看form的method是get还是post<br>2.通过链接&lt;a href…&gt;访问的servlet,doGet<br>3.直接在ie地址栏中键入的servlet地址,doGet</p>
 
       
 
@@ -194,7 +252,719 @@ return 0;</code></pre><p>}</p>
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/22/用栈写出10进制转换成8进制/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/11/06/jsp中post和get的区别及使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JSP内置对象之request response out" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JSP内置对象之request-response-out"><a href="#JSP内置对象之request-response-out" class="headerlink" title="JSP内置对象之request response out"></a>JSP内置对象之request response out</h1><h3 id="一、out对象："><a href="#一、out对象：" class="headerlink" title="一、out对象："></a>一、out对象：</h3><p>out对象是<strong>JspWriter</strong>类的实例，是向客户端输出内容常用的对象。<br>常用方法如下</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.<span class="function"><span class="keyword">void</span> <span class="title">println</span><span class="params">()</span> 向客户端打印字符串</span></span><br><span class="line"><span class="function">2.<span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span>  清除缓冲区的内容，如果在<span class="title">flush</span><span class="params">()</span>之后调用会抛出异常</span></span><br><span class="line"><span class="function">3.<span class="keyword">void</span> <span class="title">clearBuffer</span><span class="params">()</span> 清除缓冲区的内容，如果在<span class="title">flush</span><span class="params">()</span>之后调用不会抛出异常</span></span><br><span class="line"><span class="function">4.<span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span>  将缓冲区内容输出到客户端</span></span><br><span class="line"><span class="function">5.<span class="keyword">int</span> <span class="title">getBufferSize</span><span class="params">()</span>  返回缓冲区字节数的大小，如不设缓冲区则为0</span></span><br><span class="line"><span class="function">6.<span class="keyword">int</span> <span class="title">getRemaining</span><span class="params">()</span>  返回缓冲区还剩余多少可用</span></span><br><span class="line"><span class="function">7.<span class="keyword">boolean</span> <span class="title">isAutoFlush</span><span class="params">()</span>  返回缓冲区满时，是自动清空还是抛出异常</span></span><br><span class="line"><span class="function">8.<span class="keyword">void</span> <span class="title">close</span><span class="params">()</span>  关闭输出流</span></span><br></pre></td></tr></table></figure>
+
+<p>代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;%</span><br><span class="line">    out.println(<span class="string">"&lt;h2&gt;静夜思&lt;/h2&gt;"</span>);</span><br><span class="line">    out.println(<span class="string">"床前明月光 &lt;br&gt;"</span>);</span><br><span class="line">    out.println(<span class="string">"疑似地上霜 &lt;br&gt;"</span>);</span><br><span class="line">    out.println(<span class="string">"举头望明月 &lt;br&gt;"</span>);</span><br><span class="line">    out.println(<span class="string">"低头思故乡 &lt;br&gt;"</span>);</span><br><span class="line">   %&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    缓冲区大小：&lt;%=out.getBufferSize() %&gt;<span class="keyword">byte</span>&lt;br&gt;</span><br><span class="line">    缓冲区剩余大小：&lt;%=out.getRemaining() %&gt;<span class="keyword">byte</span>&lt;br&gt;</span><br><span class="line">    是否自动清除缓冲区：&lt;%=out.isAutoFlush() %&gt;&lt;br&gt;</span><br><span class="line">  &lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、request对象"><a href="#二、request对象" class="headerlink" title="二、request对象"></a>二、request对象</h3><p>客户端的请求信息被封装在request对象中，通过他才能了解到客户的需求，然后做出响应。他是<strong>HttpServletRequest</strong>的实例。request对象具有请求域，即完成客户端的请求之前，该对象一直有效。常用方法如下：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getParameter</span><span class="params">(String name)</span> 返回name指定参数的参数值</span></span><br><span class="line"><span class="function">String[] <span class="title">getParameterValues</span><span class="params">(String name)</span> 返回包含参数name的所有值的数组</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAttribute</span><span class="params">(String,Object)</span> 存储此请求中的属性</span></span><br><span class="line"><span class="function">Object <span class="title">getAttribute</span><span class="params">(String name)</span> 返回指定属性的属性值</span></span><br><span class="line"><span class="function">String <span class="title">getContentType</span><span class="params">()</span> 得到请求体的MIME类型</span></span><br><span class="line"><span class="function">String <span class="title">getProtocol</span><span class="params">()</span> 返回请求用的协议类型及版本号</span></span><br><span class="line"><span class="function">String <span class="title">getServerName</span><span class="params">()</span> 返回接受请求的服务器主机名</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getServerPort</span><span class="params">()</span> 返回服务器接受该请求所用的端口号</span></span><br><span class="line"><span class="function">String <span class="title">getCharacterEncoding</span><span class="params">()</span> 返回字符编码方式</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setCharacterEncoding</span><span class="params">()</span> 设置请求的字符编码方式</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getCotentLenth</span><span class="params">()</span> 返回请求体的长度（字节数）</span></span><br><span class="line"><span class="function">String <span class="title">getRemoteAddr</span><span class="params">()</span> 返回发送此请求的客户端IP地址</span></span><br><span class="line"><span class="function">String <span class="title">getRealPath</span><span class="params">(String path)</span> 返回一虚拟路径的真实路径</span></span><br><span class="line"><span class="function">String <span class="title">getContextPath</span><span class="params">()</span> 返回上下文路径</span></span><br></pre></td></tr></table></figure>
+
+<p>代码：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">login.jsp：</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;用户注册&lt;/h1&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;form action=<span class="string">"request.jsp"</span> name=<span class="string">"regForm"</span> method=<span class="string">"post"</span>&gt;</span><br><span class="line">        &lt;table&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td&gt;用户名：&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;&lt;input type="text" name="username"/&gt;&lt;/td&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td&gt;爱好：&lt;/td&gt;</span><br><span class="line">                &lt;td&gt;</span><br><span class="line">                    &lt;input type=<span class="string">"checkbox"</span> name=<span class="string">"favorite"</span> value=<span class="string">"read"</span>&gt;读书</span><br><span class="line">                    &lt;input type=<span class="string">"checkbox"</span> name=<span class="string">"favorite"</span> value=<span class="string">"music"</span>&gt;音乐</span><br><span class="line">                    &lt;input type=<span class="string">"checkbox"</span> name=<span class="string">"favorite"</span> value=<span class="string">"movie"</span>&gt;电影</span><br><span class="line">                    &lt;input type=<span class="string">"checkbox"</span> name=<span class="string">"favorite"</span> value=<span class="string">"internet"</span>&gt;排球</span><br><span class="line">                &lt;/td&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td colspan="2"&gt;&lt;input type="submit" value="提交"/&gt;&lt;/td&gt;</span><br><span class="line">            &lt;/tr&gt;</span><br><span class="line">        &lt;/table&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    &lt;br&gt;&lt;br&gt;</span><br><span class="line">    &lt;a href=<span class="string">"request.jsp?username="</span>张三<span class="string">"&gt;测试URL传参数&lt;/a&gt;</span></span><br><span class="line"><span class="string">  &lt;/body&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">request.jsp:</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;request内置对象&lt;/h1&gt;</span><br><span class="line">    &lt;%request.setCharacterEncoding(<span class="string">"utf-8"</span>); %&gt; &lt;%--解决中文乱码问题，无法解决url传递中文的乱码问题 --%&gt;</span><br><span class="line">    &lt;%</span><br><span class="line">        request.setAttribute(<span class="string">"password"</span> , <span class="string">"123456"</span>);</span><br><span class="line">     %&gt;</span><br><span class="line">    用户名：&lt;%=request.getParameter(<span class="string">"username"</span>) %&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    爱好：</span><br><span class="line">    &lt;%</span><br><span class="line">        <span class="keyword">if</span>(request.getParameterValues(<span class="string">"favorite"</span>)!=<span class="keyword">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            String[] favorites=request.getParameterValues(<span class="string">"favorite"</span>);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;favorites.length;i++)&#123;</span><br><span class="line">                out.write(favorites[i]+<span class="string">"&amp;nbsp;&amp;nbsp;"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    %&gt;&lt;br&gt;</span><br><span class="line">    密码：&lt;%=request.getAttribute(<span class="string">"password"</span>) %&gt;&lt;br&gt;</span><br><span class="line">    请求体的MIME类型：&lt;%=request.getContentType() %&gt;&lt;br&gt;</span><br><span class="line">    协议类型及版本号：&lt;%=request.getProtocol() %&gt;&lt;br&gt;</span><br><span class="line">    服务器主机名：&lt;%=request.getServerName() %&gt;&lt;br&gt;</span><br><span class="line">    服务器端口名：&lt;%=request.getServerPort() %&gt;&lt;br&gt;</span><br><span class="line">    请求文件长度：&lt;%=request.getContentLength() %&gt;&lt;br&gt;</span><br><span class="line">    请求客户端的IP地址：&lt;%=request.getRemoteAddr() %&gt;&lt;br&gt;</span><br><span class="line">    请求的真实路径：&lt;%=request.getRealPath(<span class="string">"request.jsp"</span>) %&gt;&lt;br&gt;</span><br><span class="line">    请求的上下文路径：&lt;%=request.getContextPath() %&gt;&lt;br&gt;</span><br><span class="line">  &lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、response对象"><a href="#三、response对象" class="headerlink" title="三、response对象"></a>三、response对象</h3><p>response对象包含了相应客户请求的有关信息，但在jsp中很少直接使用到它。它是<strong>HttpServerResponse</strong>类的实例。response对象具有页面作用域，即访问一个页面时，该页面内的response对象只能对这次访问有效，其他页面的response对象对当前页面无效。常用方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String getCharacterEncoding() 返回响应用的是何种字符编码</span><br><span class="line">void setContentType() 设置响应的MIME类型</span><br><span class="line">printWriter getWriter() 返回可以向客户端输出字符的一个对象（注意比较printWriter和内置对象out的区别）</span><br><span class="line">sendRedirect(java.lang.String location) 重新定向客户端的请求</span><br></pre></td></tr></table></figure>
+
+<p>请求转发和请求重定向区别：<br>1.请求重定向：客户端行为，<strong>response.sendRedirect()</strong>，从本质上来讲等同于两次请求，前一次请求对象不会保存，地址栏的URL对象会改变。<br>2.请求转发：服务器行为，<strong>request.getRequestDispatcher().forward(request,response)</strong>；是一次请求，转发后请求对象会保存，地址栏的URL地址不会改变。<br>代码：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;%<span class="meta">@page</span> <span class="keyword">import</span>=<span class="string">"java.io.PrintWriter"</span>%&gt;</span><br><span class="line">&lt;%@ page language=<span class="string">"java"</span> <span class="keyword">import</span>=<span class="string">"java.util.*"</span> contentType=<span class="string">"text/html; charset=utf-8"</span>%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    response.setContentType(<span class="string">"text/html; charset=utf-8"</span>);<span class="comment">//设置响应的MIME类型</span></span><br><span class="line">    out.println(<span class="string">"&lt;h1&gt;response内置对象&lt;h1&gt;"</span>);</span><br><span class="line">    out.println(<span class="string">"&lt;hr&gt;"</span>);</span><br><span class="line">    <span class="comment">//out.flush();</span></span><br><span class="line"></span><br><span class="line">    PrintWriter outer=response.getWriter();<span class="comment">//获得输出流对象</span></span><br><span class="line">    outer.println(<span class="string">"大家好，我是response对象生成的outer对象"</span>);</span><br><span class="line"></span><br><span class="line">    response.sendRedirect(<span class="string">"reg.jsp"</span>);<span class="comment">//请求重定向</span></span><br><span class="line"> %&gt;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/06/JSP内置对象之request response out/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Ajax简述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/30/Ajax简述/">Ajax简介</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/30/Ajax简述/" class="archive-article-date">
+  	<time datetime="2019-10-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="AJAX-简介"><a href="#AJAX-简介" class="headerlink" title="AJAX 简介"></a>AJAX 简介</h1><hr>
+<p>AJAX 是一种在无需重新加载整个网页的情况下，能够更新部分网页的技术。</p>
+<hr>
+<h2 id="您应当具备的基础知识"><a href="#您应当具备的基础知识" class="headerlink" title="您应当具备的基础知识"></a>您应当具备的基础知识</h2><p>在继续学习之前，您需要对下面的知识有基本的了解：</p>
+<ul>
+<li>HTML / XHTML</li>
+<li>CSS</li>
+<li>JavaScript / DOM</li>
+</ul>
+<p>如果您希望首先学习这些项目，请在我们的<a href="https://www.runoob.com/" target="_blank" rel="noopener">首页</a>访问这些教程。</p>
+<hr>
+<h2 id="什么是-AJAX-？"><a href="#什么是-AJAX-？" class="headerlink" title="什么是 AJAX ？"></a>什么是 AJAX ？</h2><p>AJAX = 异步 JavaScript 和 XML。</p>
+<p>AJAX 是一种用于创建快速动态网页的技术。</p>
+<p>通过在后台与服务器进行少量数据交换，AJAX 可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<p>传统的网页（不使用 AJAX）如果需要更新内容，必需重载整个网页面。</p>
+<p>有很多使用 AJAX 的应用程序案例：新浪微博、Google 地图、开心网等等。</p>
+<hr>
+<h2 id="AJAX-工作原理"><a href="#AJAX-工作原理" class="headerlink" title="AJAX 工作原理"></a>AJAX 工作原理</h2><p><img src="https://www.runoob.com/wp-content/uploads/2013/09/ajax-yl.png" alt="AJAX"></p>
+<hr>
+<h2 id="AJAX是基于现有的Internet标准"><a href="#AJAX是基于现有的Internet标准" class="headerlink" title="AJAX是基于现有的Internet标准"></a>AJAX是基于现有的Internet标准</h2><p>AJAX是基于现有的Internet标准，并且联合使用它们：</p>
+<ul>
+<li>XMLHttpRequest 对象 (异步的与服务器交换数据)</li>
+<li>JavaScript/DOM (信息显示/交互)</li>
+<li>CSS (给数据定义样式)</li>
+<li>XML (作为转换数据的格式)</li>
+</ul>
+<p><img src="https://www.runoob.com/images/lamp.gif" alt="lamp">  AJAX应用程序与浏览器和平台无关的！</p>
+<hr>
+<h2 id="Google-Suggest"><a href="#Google-Suggest" class="headerlink" title="Google Suggest"></a>Google Suggest</h2><p>在 2005 年，Google 通过其 Google Suggest 使 AJAX 变得流行起来。</p>
+<p>Google Suggest 使用 AJAX 创造出动态性极强的 web 界面：当您在谷歌的搜索框输入关键字时，JavaScript 会把这些字符发送到服务器，然后服务器会返回一个搜索建议的列表。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/30/Ajax简述/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JSP内置对象response常见用法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/30/JSP内置对象response常见用法/">JSP内置对象response常见用法</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/30/JSP内置对象response常见用法/" class="archive-article-date">
+  	<time datetime="2019-10-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一、重定向网页</strong></p>
+<p>重定向操作支持将地址重定向到不同的主机上，这一点与转发不同。在客户机浏览器上将会得到跳转的地址，并重新发送请求链接。进行重定向后，request中的属性全部失效，并开始一个新的request对象。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> <span class="keyword">import</span>=<span class="string">"java.util.*"</span></span><br><span class="line">	contentType=<span class="string">"text/html; charset=UTF-8"</span> pageEncoding=<span class="string">"UTF-8"</span>%&gt;</span><br><span class="line">	&lt;%response.sendRedirect(<span class="string">"deal.jsp"</span>); %&gt;</span><br></pre></td></tr></table></figure>
+
+<p> 在JSP页面中使用该方法时，不要再用JSP脚本代码包括return语句，因为重定向之后的代码已经没有意义。并且还可能产生错误。 </p>
+<p><strong>二、处理HTTP文件头</strong></p>
+<p>1、禁用缓存</p>
+<p>默认情况浏览器会对网页进行缓存，可以提高网页显示速度，但是对于一些安全性要求比较高的网站，通常需要禁用缓存。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;% response.setHeader(<span class="string">"Cache-Control"</span>, <span class="string">"no-store"</span>);</span><br><span class="line">	   response.setDateHeader(<span class="string">"Expires"</span>, <span class="number">0</span>);%&gt;</span><br></pre></td></tr></table></figure>
+
+<p> 2、自动刷新 </p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 每隔<span class="number">10</span>秒自动刷新一次 --&gt;</span><br><span class="line">	&lt;% response.setHeader(<span class="string">"refresh"</span>, <span class="string">"10"</span>);%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3、定时跳转到网页</p>
+<p>5秒后自动跳转到指定网页：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% response.setHeader(<span class="string">"refresh"</span>, <span class="string">"5;URL=deal.jsp"</span>);%&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>三、设置输出缓冲</strong></p>
+<p>缓冲区的概念就不解释了，满足下面3种情况之一，就会把缓冲区的内容写到客户端。</p>
+<p>1、JSP页面的输出信息已经全部写入到了缓冲区</p>
+<p>2、缓冲区已满</p>
+<p>3、调用了response的flushBuffer或者out的flush方法。</p>
+<p><img src="C:%5CUsers%5C36127%5CDesktop%5Cbg.png" alt></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/30/JSP内置对象response常见用法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Jdk环境变量配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/30/Jdk环境变量配置/">Jdk环境变量配置</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/30/Jdk环境变量配置/" class="archive-article-date">
+  	<time datetime="2019-10-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JDK-开发环境配置"><a href="#JDK-开发环境配置" class="headerlink" title="JDK 开发环境配置"></a>JDK 开发环境配置</h1><p>在本章节中我们将为大家介绍如何搭建Java开发环境。</p>
+<ul>
+<li><a href="https://www.runoob.com/java/java-environment-setup.html#win-install" target="_blank" rel="noopener">Windows 上安装开发环境</a></li>
+<li><a href="https://www.runoob.com/java/java-environment-setup.html#linux-install" target="_blank" rel="noopener">Linux 上安装开发环境</a></li>
+<li><a href="https://www.runoob.com/java/java-environment-setup.html#eclipse-install" target="_blank" rel="noopener">安装 Eclipse 运行 Java</a></li>
+</ul>
+<hr>
+<h2 id="window系统安装java"><a href="#window系统安装java" class="headerlink" title="window系统安装java"></a>window系统安装java</h2><h3 id="下载JDK"><a href="#下载JDK" class="headerlink" title="下载JDK"></a>下载JDK</h3><p>首先我们需要下载java开发工具包JDK，下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html，点击如下下载按钮：" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/index.html，点击如下下载按钮：</a></p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-download.jpg" alt="img"></p>
+<p>在下载页面中你需要选择接受许可，并根据自己的系统选择对应的版本，本文以 Window 64位系统为例：</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-download-1.jpg" alt="img"></p>
+<p>下载后JDK的安装根据提示进行，还有安装JDK的时候也会安装JRE，一并安装就可以了。</p>
+<p>安装JDK，安装过程中可以自定义安装目录等信息，例如我们选择安装目录为 <strong>C:\Program Files (x86)\Java\jdk1.8.0_91</strong>。</p>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><p>1.安装完成后，右击”我的电脑”，点击”属性”，选择”高级系统设置”；</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/win-java1.png" alt="img"></p>
+<p>2.选择”高级”选项卡，点击”环境变量”；</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-win2.png" alt="img"></p>
+<p>然后就会出现如下图所示的画面：</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-win3.png" alt="img"></p>
+<blockquote>
+<p><strong>注意：</strong>如果使用 1.5 以上版本的 JDK，不用设置 CLASSPATH 环境变量，也可以正常编译和运行 Java 程序。</p>
+</blockquote>
+<p>变量设置参数如下：</p>
+<ul>
+<li><p>变量名：<strong>JAVA_HOME</strong></p>
+</li>
+<li><p>变量值：<strong>C:\Program Files (x86)\Java\jdk1.8.0_91</strong>        // 要根据自己的实际路径配置</p>
+</li>
+<li><p>变量名：<strong>CLASSPATH</strong></p>
+</li>
+<li><p>变量值：<strong>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;</strong>         //记得前面有个”.”</p>
+</li>
+<li><p>变量名：<strong>Path</strong></p>
+</li>
+<li><p>变量值：<strong>%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;</strong></p>
+</li>
+</ul>
+<h3 id="JAVA-HOME-设置"><a href="#JAVA-HOME-设置" class="headerlink" title="JAVA_HOME 设置"></a>JAVA_HOME 设置</h3><p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-win4.png" alt="img"></p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-win5.png" alt="img"></p>
+<h3 id="PATH设置"><a href="#PATH设置" class="headerlink" title="PATH设置"></a>PATH设置</h3><p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-win6.png" alt="img"></p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-win7.png" alt="img"></p>
+<blockquote>
+<p><strong>注意：</strong>在 Windows10 中，Path 变量里是分条显示的，我们需要将 <strong>%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;</strong> 分开添加，否则无法识别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; %JAVA_HOME%\bin;</span><br><span class="line">&gt; %JAVA_HOME%\jre\bin;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/44A70696-B2E6-4055-B88F-7FC0222DCCA4.png" alt="img"></p>
+<p>更多内容可参考：<a href="https://www.runoob.com/w3cnote/windows10-java-setup.html" target="_blank" rel="noopener">Windows 10 配置Java 环境变量</a></p>
+</blockquote>
+<h3 id="CLASSPATH-设置"><a href="#CLASSPATH-设置" class="headerlink" title="CLASSPATH 设置"></a>CLASSPATH 设置</h3><p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-win8.png" alt="img"></p>
+<p>这是 Java 的环境配置，配置完成后，你可以启动 Eclipse 来编写代码，它会自动完成java环境的配置。</p>
+<h3 id="测试JDK是否安装成功"><a href="#测试JDK是否安装成功" class="headerlink" title="测试JDK是否安装成功"></a>测试JDK是否安装成功</h3><p>1、”开始”-&gt;”运行”，键入”cmd”；</p>
+<p>2、键入命令: <strong>java -version</strong>、<strong>java</strong>、<strong>javac</strong> 几个命令，出现以下信息，说明环境变量配置成功；</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2013/12/java-win9.png" alt="img"></p>
+<hr>
+<h2 id="Linux，UNIX，Solaris，FreeBSD环境变量设置"><a href="#Linux，UNIX，Solaris，FreeBSD环境变量设置" class="headerlink" title="Linux，UNIX，Solaris，FreeBSD环境变量设置"></a>Linux，UNIX，Solaris，FreeBSD环境变量设置</h2><p>环境变量PATH应该设定为指向Java二进制文件安装的位置。如果设置遇到困难，请参考shell文档。</p>
+<p>例如，假设你使用bash作为shell，你可以把下面的内容添加到你的 .bashrc文件结尾: export PATH=/path/to/java:$PATH</p>
+<hr>
+<h2 id="流行JAVA开发工具"><a href="#流行JAVA开发工具" class="headerlink" title="流行JAVA开发工具"></a>流行JAVA开发工具</h2><p>正所谓工欲善其事必先利其器，我们在开发java语言过程中同样需要一款不错的开发工具，目前市场上的IDE很多，本文为大家推荐以下下几款java开发工具：</p>
+<ul>
+<li><p><strong>Eclipse（推荐）:</strong>另一个免费开源的java IDE，下载地址： <a href="http://www.eclipse.org/downloads/packages/" target="_blank" rel="noopener">http://www.eclipse.org/downloads/packages/</a></p>
+<p>选择 <strong>Eclipse IDE for Java Developers</strong>：<br><img src="https://www.runoob.com/wp-content/uploads/2013/12/5A92DEAE-EFB9-493D-AC4D-808E529B533C.jpg" alt="img"></p>
+</li>
+<li><p><strong>JetBrains</strong> 的 IDEA， 现在很多人开始使用了，功能很强大，下载地址：<a href="https://www.jetbrains.com/idea/download/" target="_blank" rel="noopener">https://www.jetbrains.com/idea/download/</a></p>
+</li>
+<li><p><strong>Notepad++ :</strong> Notepad++ 是在微软视窗环境之下的一个免费的代码编辑器，下载地址：<a href="http://notepad-plus-plus.org/" target="_blank" rel="noopener"> http://notepad-plus-plus.org/</a></p>
+</li>
+<li><p><strong>Netbeans:</strong>开源免费的java IDE，下载地址： <a href="http://www.netbeans.org/index.html" target="_blank" rel="noopener">http://www.netbeans.org/index.html</a></p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/30/Jdk环境变量配置/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-安卓开发环境搭配" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/30/安卓开发环境搭配/">安卓开发环境搭配</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/30/安卓开发环境搭配/" class="archive-article-date">
+  	<time datetime="2019-10-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-2-开发环境搭建"><a href="#1-2-开发环境搭建" class="headerlink" title="1.2 开发环境搭建"></a>1.2 开发环境搭建</h2><h3 id="分类-Android-基础入门教程"><a href="#分类-Android-基础入门教程" class="headerlink" title="分类 Android 基础入门教程"></a><em>分类</em> <a href="https://www.runoob.com/w3cnote_genre/android" target="_blank" rel="noopener">Android 基础入门教程</a></h3><blockquote>
+<p>现在主流的Android开发环境有: ①Eclipse + ADT + SDK ②Android Studio + SDK ③IntelliJ IDEA + SDK 现在国内大部分开发人员还是使用的Eclipse，而谷歌宣布不再更新ADT后，并且官网也去掉了集成Android开发环境的Eclipse下载链接，各种现象都表示开发者最后都终将过渡到Android Studio，当然这段过渡时间会很长，但如果你是刚学Android的话建议直接冲Android Studio着手；而且很多优秀的开源项目都是基于Android Studio！当然，在本教程中对两种开发环境都会进行一个介绍，用哪个取决与你自己~ 还有一个IntelliJ，和Android Studio差不多的，并不对此进行讲解！</p>
+</blockquote>
+<h2 id="1-JDK安装与配置"><a href="#1-JDK安装与配置" class="headerlink" title="1.JDK安装与配置"></a>1.JDK安装与配置</h2><blockquote>
+<ul>
+<li><strong>Step 1:下载JDK</strong> 可以到官网进行下载：<a href="http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html" target="_blank" rel="noopener">Jdk官方下载</a> 也可到笔者网盘下载：<a href="http://pan.baidu.com/s/1o6LxZHC" target="_blank" rel="noopener">笔者网盘</a> PS:这个随便下一个都可以，关系不大，32位的只能下32位哦！</li>
+<li><strong>Step 2:JDK安装</strong> 傻瓜式的下一步即可！</li>
+<li><strong>Step 3:环境变量的配置</strong> 配置环境变量是为了方便我们一些命令行的操作，后续会用到！ <strong>右键我的电脑——&gt;高级——&gt;环境变量</strong> <img src="https://www.runoob.com/wp-content/uploads/2015/06/39936377.jpg" alt="Java环境变量配置1"> <strong>新建JAVA_HOME</strong> <img src="https://www.runoob.com/wp-content/uploads/2015/06/12299725.jpg" alt="新建JAVA_HOME"> <strong>修改PATH变量，别把原本的东西删掉！！！！</strong> <img src="https://www.runoob.com/wp-content/uploads/2015/06/80572641.jpg" alt="修改PATH变量"> <strong>新建CLASSPATH</strong> <img src="https://www.runoob.com/wp-content/uploads/2015/06/87557685.jpg" alt="新建CLASSPATH"> <strong>验证环境是否配置完成</strong> 打开电脑的cmd(命令行)，win键 + R输入cmd，然后在命令行依次javac和java，出现如图效果表示配置完成： <img src="https://www.runoob.com/wp-content/uploads/2015/06/40813475.jpg" alt="此处输入图片的描述"></li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="2-开发工具二选一"><a href="#2-开发工具二选一" class="headerlink" title="2.开发工具二选一"></a>2.开发工具二选一</h2><blockquote>
+<p>一开始也说了开发环境IDE的现状，另外前面忘记说一点:Android Studio是比较吃配置的，如果电脑不怎么好，建议还是先使用Eclipse进行Android开发，下面先说下我们熟悉IDE开发APP的流程，按照下述流程来熟悉IDE的使用：</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2015/06/62458334.jpg" alt="熟悉IDE开发APP的流程"></p>
+<p>然后下面两个选一个，开始我们的Android开发之路吧！</p>
+<p><strong>Eclipse + ADT + SDK：</strong> <strong>Android Studio + SDK：</strong></p>
+</blockquote>
+<hr>
+<h2 id="3-相关术语的解析"><a href="#3-相关术语的解析" class="headerlink" title="3.相关术语的解析"></a>3.相关术语的解析</h2><blockquote>
+<ol>
+<li><strong>Dalvik：</strong> Android特有的虚拟机,和JVM不同,Dalvik虚拟机非常适合在移动终端上使用!</li>
+<li><strong>AVD：</strong> (android virtual machine):安卓虚拟设备,就是安卓的模拟器</li>
+<li><strong>ADT：</strong> (android development tools)安卓开发工具</li>
+<li><strong>SDK：</strong>(software development kit)软件开发工具包,就是安卓系统,平台架构等的工具集合,如adb.exe</li>
+<li><strong>DDMS：</strong>(dalvik debug monitor service)安卓调试工具</li>
+<li><strong>adb：</strong>安卓调试桥,在sdk的platform-tools目录下,功能很多,命令行必备</li>
+<li><strong>DX工具：</strong>将.class转换成.dex文件</li>
+<li><strong>AAPT：</strong>(android asset packing tool),安卓资源打包工具</li>
+<li><strong>R.java文件：</strong>由aapt工具根据App中的资源文件自动生成,可以理解为资源字典</li>
+<li><strong>AndroidManifest.xml：</strong>app包名 + 组件声明 + 程序兼容的最低版本 + 所需权限等程序的配置文件</li>
+</ol>
+</blockquote>
+<hr>
+<p>后续内容对于初学者的你可能有点难度，但后面回头，你会发现这些东西很有用~ 看不懂的话，可以先跳过</p>
+<h2 id="4-ADB命令行的一些指令"><a href="#4-ADB命令行的一些指令" class="headerlink" title="4.ADB命令行的一些指令"></a>4.ADB命令行的一些指令</h2><blockquote>
+<p>执行ADB指令之前我们还需要为我们的SDK配置一下环境变量 <strong>Step 1:</strong>新建一个ANDROID_HOME的环境变量，把sdk根目录地址贴上去： <img src="https://www.runoob.com/wp-content/uploads/2015/06/4497768.jpg" alt="此处输入图片的描述"> <strong>Step 2:</strong>更新Path环境变量，在Paht开头加上：<strong>%ANDROID_HOME%\tools;</strong> 即可 配置完了，接下来就来学习指令了： <img src="https://www.runoob.com/wp-content/uploads/2015/06/95349283.jpg" alt="常用ADB指令"></p>
+</blockquote>
+<hr>
+<h2 id="5-APP程序打包与安装的流程："><a href="#5-APP程序打包与安装的流程：" class="headerlink" title="5.APP程序打包与安装的流程："></a>5.APP程序打包与安装的流程：</h2><blockquote>
+<p><img src="https://www.runoob.com/wp-content/uploads/2015/06/5918079.jpg" alt="APP程序打包与安装的流程"></p>
+</blockquote>
+<hr>
+<h2 id="6-APP的安装过程："><a href="#6-APP的安装过程：" class="headerlink" title="6.APP的安装过程："></a>6.APP的安装过程：</h2><blockquote>
+<p><img src="https://www.runoob.com/wp-content/uploads/2015/06/30239720.jpg" alt="APP的安装过程"></p>
+</blockquote>
+<h2 id="7-本节小结"><a href="#7-本节小结" class="headerlink" title="7.本节小结"></a>7.本节小结</h2><blockquote>
+<p>本节我们对Android开发IDE的现状进行了分析，建议初学者硬件条件允许的话，使用Android Studio来进行Android APP的开发，讲述了JDK的安装与配置，以及熟悉IDE的流程，一些关键名称的解析，ADB命令行的常用指令，最后还有程序的打包安装和安装过程的解析！经过这章相信大家对Android开发有了个简单了解，了解开发一个程序的流程，以及对应的项目目录结构！相信大家会抱怨模拟器AVD跑得很慢，下节会给大家介绍一个比真机还快的Android模拟器——Genymotion的安装使用！</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/30/安卓开发环境搭配/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-jsp的request对象" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/24/jsp的request对象/">jsp</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/24/jsp的request对象/" class="archive-article-date">
+  	<time datetime="2019-10-23T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="jsp的request对象主要方法"><a href="#jsp的request对象主要方法" class="headerlink" title="jsp的request对象主要方法"></a>jsp的request对象主要方法</h3><h6 id="request对象的方法非常多，只写其中常用的几种方法。"><a href="#request对象的方法非常多，只写其中常用的几种方法。" class="headerlink" title="request对象的方法非常多，只写其中常用的几种方法。"></a>request对象的方法非常多，只写其中常用的几种方法。</h6><ul>
+<li><p><strong>getAttribute(String name);</strong>这个方法可以取出<strong>name</strong>属性的值，<strong>name</strong>属性的值可以用<strong>setAttribute(String name,Object o);</strong>方法赋值，如果没有对其赋值，则默认<strong>name</strong>为<strong>null</strong>;    </p>
+</li>
+<li><p><strong>getContexntPath();</strong>这个方法可以获取服务器上下文的路径；</p>
+</li>
+<li><p><strong>getCookies();</strong>这个方法可以获取客户端的Cookies（一个保存在客户机中的简单的文本文件）；</p>
+</li>
+<li><p><strong>getHeader(String name)</strong>这个方法可以获取指定名称的HTTP报头的属性值；</p>
+</li>
+<li><p><strong>getParameter(String name)</strong>这个方法可以获取客户端提交到服务器的参数；</p>
+</li>
+<li><p><strong>getServerName()</strong>这个方法可以获得服务器的名称</p>
+</li>
+<li><p><strong>getServerPort()</strong>这个方法可以获得服务器的访问端口</p>
+</li>
+<li><p><strong>setAttribute(String name,Object o);</strong>对name属性赋值</p>
+</li>
+<li><p><strong>removeAttribute(String name)</strong>这个方法移除指定名称的属性</p>
+</li>
+<li><p><strong>getRemoteAddr()</strong>这个方法返回客户端的IP地址</p>
+<h2 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h2></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> contentType=<span class="string">"text/html; charset=UTF-8"</span></span><br><span class="line">    pageEncoding=<span class="string">"gb2312"</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">&lt;title&gt;request实例&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	request.setAttribute(<span class="string">"attr"</span>, <span class="string">"hello!"</span>);</span><br><span class="line">	out.print(<span class="string">"attr的值"</span>+request.getAttribute(<span class="string">"attr"</span>)+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	out.print(<span class="string">"上下文路径"</span>+request.getContextPath()+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	out.print(<span class="string">"Cookies:"</span>+request.getCookies()+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	out.print(<span class="string">"Host:"</span>+request.getHeader(<span class="string">"Host"</span>)+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	out.print(<span class="string">"服务器名称："</span>+request.getServerName()+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	out.print(<span class="string">"服务器端口："</span>+request.getServerPort()+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	out.print(<span class="string">"客户端的IP地址："</span>+request.getRemoteAddr()+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	request.removeAttribute(<span class="string">"attr"</span>);</span><br><span class="line">	out.print(<span class="string">"属性移除后的attr的值："</span>+request.getAttribute(<span class="string">"attr"</span>)+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果："><a href="#结果：" class="headerlink" title="结果："></a>结果：</h3><img src="http://a1.qpic.cn/psb?/V13S9xI31Px2LW/p5RYDG8GnkBkSSMOzIUH7uJq0KspJo3TBS*Hf.Iwp9M!/c/dFQBAAAAAAAA&ek=1&kp=1&pt=0&bo=nwEkAZ8BJAEDGTw!&tl=1&vuin=1458566939&tm=1571918400&sce=60-2-2&rf=0-0" style="zoom:150%;">
+
+<ul>
+<li>补充一个<strong>request.setCharacterEncoding(“utf-8”);</strong>用来改变传递参数的编码</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/24/jsp的request对象/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo搭建个人博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/22/hexo搭建个人博客/">hexo搭建个人博客</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/22/hexo搭建个人博客/" class="archive-article-date">
+  	<time datetime="2019-10-22T02:55:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><h4 id="第一步：删除"><a href="#第一步：删除" class="headerlink" title="第一步：删除"></a>第一步：删除</h4><blockquote>
+<p>因为是重新创建，所以要把之前的blog目录删掉。</p>
+</blockquote>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/1.png" alt="img"></p>
+<h4 id="第二步：安装框架"><a href="#第二步：安装框架" class="headerlink" title="第二步：安装框架"></a>第二步：安装框架</h4><p>在<code>hexo</code>目录中打开<code>Git Bash</code></p>
+<p>输入代码：<code>npm install hexo-cli -g</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/2.png" alt="img"></p>
+<blockquote>
+<p>该过程根据电脑内存的不同可能会持续30s-60s，耐心等待</p>
+</blockquote>
+<h4 id="第三步：创建blog"><a href="#第三步：创建blog" class="headerlink" title="第三步：创建blog"></a>第三步：创建blog</h4><p>输入代码：<code>hexo init blog</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/3.png" alt="img"></p>
+<blockquote>
+<p>该过程也是会持续一段时间</p>
+</blockquote>
+<h4 id="第四步：切换目录"><a href="#第四步：切换目录" class="headerlink" title="第四步：切换目录"></a>第四步：切换目录</h4><p>输入代码：<code>cd blog</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/4.png" alt="img"></p>
+<p><em>查看是否切换</em></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/5.png" alt="img"></p>
+<h4 id="第五步：安装组件"><a href="#第五步：安装组件" class="headerlink" title="第五步：安装组件"></a>第五步：安装组件</h4><p>输入代码：<code>npm install</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/6.png" alt="img"></p>
+<h4 id="第六步：生成静态页面"><a href="#第六步：生成静态页面" class="headerlink" title="第六步：生成静态页面"></a>第六步：生成静态页面</h4><p>输入代码：<code>hexo g</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/7.png" alt="img"></p>
+<h4 id="第七步：启动本地服务器"><a href="#第七步：启动本地服务器" class="headerlink" title="第七步：启动本地服务器"></a>第七步：启动本地服务器</h4><p>输入代码：<code>hexo s</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/8.png" alt="img"></p>
+<p>然后在浏览器输入网址：<code>localhost:4000</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/9.png" alt="img"></p>
+<p>这只是本地博客，下面配置远端博客</p>
+<p>在命令界面按<code>Ctrl</code>+<code>C</code>结束本地服务器</p>
+<h4 id="第八步：布置deployer目录"><a href="#第八步：布置deployer目录" class="headerlink" title="第八步：布置deployer目录"></a>第八步：布置deployer目录</h4><p>输入代码：<code>npm install --save hexo-deployer-git</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/10.png" alt="img"></p>
+<blockquote>
+<p>该过程需要一段时间的加载，耐心等待！</p>
+</blockquote>
+<h4 id="第九步：修改-config-yml文件"><a href="#第九步：修改-config-yml文件" class="headerlink" title="第九步：修改_config.yml文件"></a>第九步：修改_config.yml文件</h4><p>打开<code>hexo</code>根目录下的<code>_config.yml</code>文件，修改其<code>deploy</code>标签的内容(应该在最下面)</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/11.png" alt="img"></p>
+<p><strong>repo后面的Frightings修改成你们自己的名字！冒号后面跟个空格！</strong></p>
+<p>修改后输入代码：<code>hexo clean</code>清理缓存，</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/12.png" alt="img"></p>
+<p>然后输入代码：<code>hexo g</code>重新布置静态页面。</p>
+<h4 id="第十步：布置远端博客"><a href="#第十步：布置远端博客" class="headerlink" title="第十步：布置远端博客"></a>第十步：布置远端博客</h4><p>输入代码：<code>hexo d</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/13.png" alt="img"></p>
+<p>然后他会让你告诉他，你是谁~（Please tell me who you are）</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/14.png" alt="img"></p>
+<p>接着咱们就告诉他，咱是谁~</p>
+<p>输入代码：<code>git config --global user.email &quot;youremail@qq.com&quot;</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/15.png" alt="img"></p>
+<p><strong>注意！ 这边<a href="mailto:youremail@qq.com" target="_blank" rel="noopener">youremail@qq.com</a>不是让你照搬抄上！是让你写上你自己的邮箱！</strong></p>
+<p>接着输入代码：<code>git config --global user.name &quot;yourname&quot;</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/16.png" alt="img"></p>
+<p><strong>同样，这边yourname不是让你照搬抄上！是让你写上你自己的用户名。</strong></p>
+<p>然后依次输入代码:<code>hexo clean</code>清理下缓存，</p>
+<p><code>hexo g</code>生成静态页面，<code>hexo d</code>布置远端。</p>
+<h4 id="第十一步：查看效果"><a href="#第十一步：查看效果" class="headerlink" title="第十一步：查看效果"></a>第十一步：查看效果</h4><p>然后在网站中输入你的博客地址<code>yourname.github.io</code>就会出现你的博客。</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/17.png" alt="img"></p>
+<h4 id="第十二步：写博客"><a href="#第十二步：写博客" class="headerlink" title="第十二步：写博客"></a>第十二步：写博客</h4><p>输入代码：<code>hexo new &quot;我的第一篇博客&quot;</code></p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/18.png" alt="img"></p>
+<p>这上面写出了你的博客路径，找到他进行编辑。</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/19.png" alt="img"></p>
+<p>打开后：</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/20.png" alt="img"></p>
+<p>上面有个<code>tags</code>标签,目前没什么用，先<strong>删除</strong>，要不然可能会编译错误。</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/21.png" alt="img"></p>
+<p>编辑完之后：</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/22.png" alt="img"></p>
+<h4 id="第十三步：查看效果"><a href="#第十三步：查看效果" class="headerlink" title="第十三步：查看效果"></a>第十三步：查看效果</h4><p>十二步完成后，依次输入代码：<code>hexo clean</code>清理缓存，</p>
+<p>输入代码：<code>hexo g</code>生成静态页面，</p>
+<p>可以发现里面的<code>INFO</code>项中加载了自己写的博客。</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/23.png" alt="img"></p>
+<p>输入代码：<code>hexo d</code> 缓存到GitHub。</p>
+<p>然后再刷新一下自己的博客地址，可以发现自己写的博客已经显示了。</p>
+<p><img src="https://czongz.github.io/2019/10/10/hexo-da-jian-ge-ren-bo-ke/24.png" alt="img"></p>
+<p><strong>如果需要继续添加文章，也是相同的步骤和代码。</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/22/hexo搭建个人博客/">展开全文 >></a>
         </p>
       
 
@@ -288,182 +1058,10 @@ return 0;</code></pre><p>}</p>
 
 
   
-    <article id="post-java面向对象知识点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/11/java面向对象知识点/">java面向对象知识点</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/11/java面向对象知识点/" class="archive-article-date">
-  	<time datetime="2019-10-11T04:02:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>[TOC]</p>
-<h2 id="第二章-类和对象"><a href="#第二章-类和对象" class="headerlink" title="第二章 类和对象"></a>第二章 类和对象</h2><hr>
-<h3 id="1-面向对象概念"><a href="#1-面向对象概念" class="headerlink" title="1.面向对象概念"></a>1.面向对象概念</h3><h3 id="2-类的创建"><a href="#2-类的创建" class="headerlink" title="2.类的创建"></a>2.类的创建</h3><p>语法：public class 类名{}<br>File—&gt;new—&gt;class—&gt;类名</p>
-<h3 id="3-创建对象"><a href="#3-创建对象" class="headerlink" title="3.创建对象"></a>3.创建对象</h3><p>类名 对象名=new 类名();</p>
-<p>对象名.方法名(); 对象名.属性 </p>
-<h3 id="4-构造方法"><a href="#4-构造方法" class="headerlink" title="4.构造方法"></a>4.构造方法</h3><p>​    方法名和类名相同,没有返回值  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class 类名&#123;</span><br><span class="line">	public 类名()&#123;&#125;//主要的做用是初始化操作</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-构造方法重载"><a href="#5-构造方法重载" class="headerlink" title="5.构造方法重载"></a>5.构造方法重载</h3><p>在同一个类中，方法名相同，参数个数，顺序，类型不相同的构造方法    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class 类名&#123;</span><br><span class="line">	public 类名()&#123;&#125;</span><br><span class="line">	public 类名(String name,int age)&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-构造方法的执行"><a href="#6-构造方法的执行" class="headerlink" title="6.构造方法的执行"></a>6.构造方法的执行</h3><p>new 类名();—&gt;执行构造方法<br>super();—&gt;执行了父类的构造方法</p>
-<h3 id="7-static静态修饰符"><a href="#7-static静态修饰符" class="headerlink" title="7.static静态修饰符"></a>7.static静态修饰符</h3><p> 静态修饰符可以修饰属性，方法，代码块<br>类名.属性      类名.方法名</p>
-<h3 id="8-java内存（栈和堆，static，方法区，gc（垃圾回收机制））"><a href="#8-java内存（栈和堆，static，方法区，gc（垃圾回收机制））" class="headerlink" title="8.java内存（栈和堆，static，方法区，gc（垃圾回收机制））"></a>8.java内存（栈和堆，static，方法区，gc（垃圾回收机制））</h3><h2 id="第三章-面向对象三大特征—封装"><a href="#第三章-面向对象三大特征—封装" class="headerlink" title="第三章 面向对象三大特征—封装"></a>第三章 面向对象三大特征—封装</h2><hr>
-<h3 id="1-封装的概念"><a href="#1-封装的概念" class="headerlink" title="1.封装的概念"></a>1.封装的概念</h3><h3 id="2-封装的步骤"><a href="#2-封装的步骤" class="headerlink" title="2.封装的步骤"></a>2.封装的步骤</h3><p>1.把属性私有化（private）<br>2.对这些属性设置get和set方法<br>3.调用处理这些方法</p>
-<h3 id="3-封装的作用"><a href="#3-封装的作用" class="headerlink" title="3.封装的作用"></a>3.封装的作用</h3><p>避免一些用一些不合乎常理的操作</p>
-<h3 id="4-修饰符"><a href="#4-修饰符" class="headerlink" title="4.修饰符"></a>4.修饰符</h3><p>public—&gt;公共的：在一个项目中都可以访问，权限最高<br>private—&gt;私有的：只能在本类中进行访问，权限最低<br>protected—&gt;安全的，受保护的：同一个包能进行访问，继承中之类可以访问父类<br>default—&gt;默认的：同一个包能访问</p>
-<h2 id="第四章-面向对象三大特征—继承"><a href="#第四章-面向对象三大特征—继承" class="headerlink" title="第四章 面向对象三大特征—继承"></a>第四章 面向对象三大特征—继承</h2><hr>
-<h3 id="1-继承的概念"><a href="#1-继承的概念" class="headerlink" title="1.继承的概念"></a>1.继承的概念</h3><p>父亲儿子，电影《西虹市首富》</p>
-<h3 id="2-继承的关键字"><a href="#2-继承的关键字" class="headerlink" title="2.继承的关键字"></a>2.继承的关键字</h3><p>  extends</p>
-<h3 id="3-继承的语法"><a href="#3-继承的语法" class="headerlink" title="3.继承的语法"></a>3.继承的语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class 类名  extends 父类&#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-使用，在之类中"><a href="#4-使用，在之类中" class="headerlink" title="4.使用，在之类中"></a>4.使用，在之类中</h3><p>可以直接调用父类的非私有属性和方法<br>可以用super.方法     super.属性</p>
-<h3 id="5-父类构造方法调用：super"><a href="#5-父类构造方法调用：super" class="headerlink" title="5.父类构造方法调用：super();"></a>5.父类构造方法调用：super();</h3><p>调用父类的构造方法必须在之类中调用<br>必须实在之类构造方法的第一行代码</p>
-<h3 id="6-重写"><a href="#6-重写" class="headerlink" title="6.重写"></a>6.重写</h3><p>必须继承<br>方法名一致，参数个数，顺序，类型全部一致</p>
-<h2 id="第五章-面向对象—多态"><a href="#第五章-面向对象—多态" class="headerlink" title="第五章 面向对象—多态"></a>第五章 面向对象—多态</h2><hr>
-<h3 id="1-多态的概念"><a href="#1-多态的概念" class="headerlink" title="1.多态的概念"></a>1.多态的概念</h3><h3 id="2-多态的必要条件"><a href="#2-多态的必要条件" class="headerlink" title="2.多态的必要条件"></a>2.多态的必要条件</h3><p>继承<br>重写<br>父类引用指向子类对象（向上转型）</p>
-<h3 id="3-多态的使用"><a href="#3-多态的使用" class="headerlink" title="3.多态的使用"></a>3.多态的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class Father&#123;</span><br><span class="line">  		public void cooking()&#123;</span><br><span class="line">  			System.out.println(&quot;米饭&quot;);</span><br><span class="line">  		&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">   	public class Son extends Father&#123;</span><br><span class="line">  			@Override</span><br><span class="line">  			public void cooking()&#123;</span><br><span class="line">  				System.out.println(&quot;熬粥&quot;);</span><br><span class="line">  			&#125;</span><br><span class="line">  		&#125;</span><br><span class="line">  		public class Test &#123;</span><br><span class="line"> 			public static void main(String[] args) &#123;</span><br><span class="line"> 				Father son=new Son();</span><br><span class="line"> 				son.cooking();</span><br><span class="line"> 			&#125;</span><br><span class="line"> 		&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-向下转型"><a href="#4-向下转型" class="headerlink" title="4.向下转型"></a>4.向下转型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Son son=(Son)father;</span><br></pre></td></tr></table></figure>
-
-<h2 id="第六章-抽象"><a href="#第六章-抽象" class="headerlink" title="第六章 抽象"></a>第六章 抽象</h2><hr>
-<h3 id="1-抽象的概念"><a href="#1-抽象的概念" class="headerlink" title="1.抽象的概念"></a>1.抽象的概念</h3><h3 id="2-抽象的关键字"><a href="#2-抽象的关键字" class="headerlink" title="2.抽象的关键字"></a>2.抽象的关键字</h3><p>abstract:可以修饰类，可以修饰方法</p>
-<h3 id="3-抽象的用法"><a href="#3-抽象的用法" class="headerlink" title="3.抽象的用法"></a>3.抽象的用法</h3><p>//抽象类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public abstract class 类名&#123;</span><br><span class="line">	//抽象方法没有方法体</span><br><span class="line">	public abstract void 方法名();	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>//当父类是抽象类的时候，子类必须重写父类里面的抽象方法</p>
-<h3 id="4-final修饰符：最终的"><a href="#4-final修饰符：最终的" class="headerlink" title="4.final修饰符：最终的"></a>4.final修饰符：最终的</h3><p>  修饰变量，修饰方法，修饰类<br>      1.当修饰变量时，变量转换成常量，常量的值不能改变<br>          final int a=18;//a=18;不能改变,必须给一个初始值<br>      2.当修饰方法时，该方法不能被重写<br>      3.当修饰类时，该类不能被继承</p>
-<h2 id="第七章-接口"><a href="#第七章-接口" class="headerlink" title="第七章 接口"></a>第七章 接口</h2><hr>
-<h3 id="1-接口的概念"><a href="#1-接口的概念" class="headerlink" title="1.接口的概念"></a>1.接口的概念</h3><h3 id="2-接口的关键字"><a href="#2-接口的关键字" class="headerlink" title="2.接口的关键字"></a>2.接口的关键字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-接口的语法"><a href="#3-接口的语法" class="headerlink" title="3.接口的语法"></a>3.接口的语法</h3><p>public interface 接口名{}<br>File—&gt;new—&gt;interface//创建接口</p>
-<h3 id="4-接口的用法"><a href="#4-接口的用法" class="headerlink" title="4.接口的用法"></a>4.接口的用法</h3><pre><code>实现接口的关键字  implements</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">	public interface 接口名&#123;</span><br><span class="line">		//接口是纯抽象类</span><br><span class="line">		//接口里面的方法都是抽象方法</span><br><span class="line">		void setData();</span><br><span class="line">	&#125;</span><br><span class="line">	public class Play implements 接口名&#123;</span><br><span class="line">		@Override</span><br><span class="line">		void setData()&#123;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line">	public class Test &#123;</span><br><span class="line">		public static void main(String[] args) &#123;</span><br><span class="line">			Play play=new Play();</span><br><span class="line">			play.setData();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注意接口可以进行多继承<br>public interface 接口名 extends 接口名，接口名{}<br>一般用法<br>public class 类名 extends 父类 implements 接口，接口{}</p>
-<h2 id="第八章-集合框架"><a href="#第八章-集合框架" class="headerlink" title="第八章 集合框架"></a>第八章 集合框架</h2><hr>
-<h3 id="1-ArrayList"><a href="#1-ArrayList" class="headerlink" title="1.ArrayList"></a>1.ArrayList</h3><p>用法<br>      ArrayList list=new ArrayList();<br>      list.add();//添加数据<br>      list.get();//获取数据</p>
-<h3 id="2-Map"><a href="#2-Map" class="headerlink" title="2.Map"></a>2.Map</h3><p> 用法<br>      Map map=new HasMap();<br>      map.put(key,value);//key不能重复<br>      map.get(key);//获取key对象的value</p>
-<h3 id="3-泛型"><a href="#3-泛型" class="headerlink" title="3.泛型"></a>3.泛型</h3><p>用法</p>
-<p>​      ArrayList<string> list=new ArrayList&gt;<string>();<br>      Map&lt;String,String&gt; map=new HasMap&lt;String,String&gt;();<br>      ArrayList&lt;Map&lt;String,String&gt;&gt; list=new ArrayList&gt;&lt;Map&lt;String,String&gt;&gt;();</string></string></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/11/java面向对象知识点/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MySQL第一章" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/10/MySQL第一章/">MySQL第一章</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/10/MySQL第一章/" class="archive-article-date">
-  	<time datetime="2019-10-10T13:08:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="我的数据库第一章"><a href="#我的数据库第一章" class="headerlink" title="我的数据库第一章"></a>我的数据库第一章</h1><hr>
-<p>我学会了</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/10/MySQL第一章/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
